@@ -3,6 +3,7 @@ package com.agusstkd.fasekotlin
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -31,35 +32,60 @@ class MainActivity : AppCompatActivity() {
 
             if (name.trim().isNotEmpty() && password.length >= 3) {
                 //Toast.makeText(this, "Bienvenido $name", Toast.LENGTH_SHORT).show()
-                createPersonIntoSharedPreferences(name = name, password = password)
-                navigateToHome()
+                validateUser(name, password)
 
             } else {
                 Toast.makeText(this, "Escribi algo", Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.buttonRegister.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
 
-    fun createPersonIntoSharedPreferences(name: String, password: String) {
-        val preferences = getSharedPreferences("Credenciales", MODE_PRIVATE)
-        val editor = preferences.edit()
-
-        val persona = Persona(name = name, pass = password)
-        val gson = Gson()
-
-        val personInJsonFormat = gson.toJson(persona)
-
-        editor.putString("persona", personInJsonFormat)
-        //editor.putString("name", name)
-        //editor.putInt("password", password.toInt())
-        editor.apply()
+    override fun onResume() {
+        super.onResume()
+        checkAutoLogin()
     }
+
+    private fun checkAutoLogin() {
+        val preferences = getSharedPreferences(RegisterActivity.CREDENCIALES, MODE_PRIVATE)
+        val autoLogin = preferences.getBoolean("autoLogin", false)
+        if (autoLogin) {
+            navigateToHome()
+        }
+    }
+
+    fun validateUser(name: String, password: String) {
+        try {
+            val preferences = getSharedPreferences(RegisterActivity.CREDENCIALES, MODE_PRIVATE)
+            val gson = Gson()
+
+            val personInJsonFormat = preferences.getString("persona", null)
+            val persona = gson.fromJson(personInJsonFormat, Persona::class.java)
+
+            if (persona.name == name && persona.pass == password) {
+                val editor = preferences.edit()
+
+                editor.putBoolean("autoLogin", binding.checkboxSession.isChecked)
+                editor.apply()
+                navigateToHome()
+
+            } else {
+                Toast.makeText(this, "Alguno de los campos es incorrecto", Toast.LENGTH_SHORT).show()
+            }
+
+        } catch (e: Exception) {
+            Toast.makeText(this, "Usuario not exist", Toast.LENGTH_SHORT).show()
+            Log.d("LoginError", "Error buscar usuario: ${e.message}")
+        }
+    }
+
 
     private fun navigateToHome() {
         val intent = Intent(this, HomeActivity::class.java)
-        val name = binding.editTextName.text.toString()
-        val persona = Persona(name = name, pass = "123")
-        intent.putExtra("persona", persona)
         startActivity(intent)
     }
 }
