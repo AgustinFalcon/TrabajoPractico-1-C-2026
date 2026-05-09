@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_item_one"
+        android:title="Opcion 1"
+        android:icon="@drawable/ic_star"
+        android:iconTint="@color/blue"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/nav_item_two"
+        android:title="Opcion 2"
+        android:icon="@drawable/ic_opc_2"/>
+
+
+    <item
+        android:id="@+id/nav_item_three"
+        android:title="Opcion 3"
+        android:icon="@drawable/ic_opc_3"/>
+
+</menu>

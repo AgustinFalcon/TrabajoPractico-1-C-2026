@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">FaseKotlin</string>
+    <string name="name_fideo_di_maria">Fideo Di Maria</string>
+    <string name="open_drawer_layout">Open</string>
+    <string name="close_drawer_layout">Close</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
