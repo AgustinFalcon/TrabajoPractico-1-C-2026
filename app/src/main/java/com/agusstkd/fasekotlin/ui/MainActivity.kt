@@ -1,4 +1,4 @@
-package com.agusstkd.fasekotlin
+package com.agusstkd.fasekotlin.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.agusstkd.fasekotlin.model.Persona
+import com.agusstkd.fasekotlin.R
 import com.agusstkd.fasekotlin.databinding.ActivityMainBinding
 import com.google.gson.Gson
 
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAutoLogin() {
-        val preferences = getSharedPreferences(RegisterActivity.CREDENCIALES, MODE_PRIVATE)
+        val preferences = getSharedPreferences(RegisterActivity.Companion.CREDENCIALES, MODE_PRIVATE)
         val autoLogin = preferences.getBoolean("autoLogin", false)
         if (autoLogin) {
             navigateToHome()
@@ -60,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     fun validateUser(name: String, password: String) {
         try {
-            val preferences = getSharedPreferences(RegisterActivity.CREDENCIALES, MODE_PRIVATE)
+            val preferences = getSharedPreferences(RegisterActivity.Companion.CREDENCIALES, MODE_PRIVATE)
             val gson = Gson()
 
             val personInJsonFormat = preferences.getString("persona", null)

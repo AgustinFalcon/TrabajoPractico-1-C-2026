@@ -21,11 +21,19 @@
             android:elevation="4dp"
             android:background="@color/blue"/>
 
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/fragmentContainerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"/>
+            android:orientation="vertical"/>-->
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph"/>
+
 
 
     </LinearLayout>

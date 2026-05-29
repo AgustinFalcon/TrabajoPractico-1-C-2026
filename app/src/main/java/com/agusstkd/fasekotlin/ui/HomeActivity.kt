@@ -1,6 +1,5 @@
-package com.agusstkd.fasekotlin
+package com.agusstkd.fasekotlin.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -11,10 +10,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import com.agusstkd.fasekotlin.model.Persona
+import com.agusstkd.fasekotlin.R
 import com.agusstkd.fasekotlin.databinding.ActivityHomeBinding
-import com.agusstkd.fasekotlin.fragments.FirstFragment
-import com.agusstkd.fasekotlin.fragments.SecondFragment
-import com.agusstkd.fasekotlin.fragments.ThirdFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 
@@ -22,7 +22,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var drawerLayout: DrawerLayout
 
-    //private lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     private lateinit var binding: ActivityHomeBinding
 
@@ -54,11 +54,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         binding.navigationView.setNavigationItemSelectedListener(this)
 
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
 
-        if (savedInstanceState == null) {
-            replaceFragment(FirstFragment())
+        /*if (savedInstanceState == null) {
+            replaceFragment(ListFragment())
             binding.navigationView.setCheckedItem(R.id.nav_item_one)
-        }
+        }*/
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -71,10 +72,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         })
 
+        navController = navHostFragment.navController
 
         //val name = intent.getStringExtra("name")
         //val user = intent.getSerializableExtra("persona") as Persona
-        val preferences = getSharedPreferences(RegisterActivity.CREDENCIALES, MODE_PRIVATE)
+        val preferences = getSharedPreferences(RegisterActivity.Companion.CREDENCIALES, MODE_PRIVATE)
         val gson = Gson()
         val personaInJsonFormat = preferences.getString("persona", null)
         val persona = gson.fromJson(personaInJsonFormat, Persona::class.java)
@@ -93,24 +95,27 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun replaceFragment(fragment: Fragment) {
         val transition = supportFragmentManager.beginTransaction()
-        transition.replace(R.id.fragmentContainerView, fragment)
+        //transition.replace(R.id.fragmentContainerView, fragment)
         transition.commit()
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.nav_item_one -> {
-                replaceFragment(FirstFragment())
+                //replaceFragment(ListFragment())
+                navController.navigate(R.id.listFragment)
                 Toast.makeText(this, "Opcion 1", Toast.LENGTH_SHORT).show()
             }
 
             R.id.nav_item_two -> {
-                replaceFragment(SecondFragment())
+                //replaceFragment(SecondFragment())
+                navController.navigate(R.id.secondFragment)
                 Toast.makeText(this, "Opcion 2", Toast.LENGTH_SHORT).show()
             }
 
             R.id.nav_item_three -> {
-                replaceFragment(ThirdFragment())
+                //replaceFragment(ThirdFragment())
+                navController.navigate(R.id.thirdFragment)
                 Toast.makeText(this, "Opcion 3", Toast.LENGTH_SHORT).show()
             }
         }

@@ -1,10 +1,8 @@
 package com.agusstkd.fasekotlin.fragments
 
 import androidx.core.util.PatternsCompat
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.agusstkd.fasekotlin.Persona
 
 class SecondViewModel : ViewModel() {
     //var viewState = MutableLiveData<SecondStateEnum>()

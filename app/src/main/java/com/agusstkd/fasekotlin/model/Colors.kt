@@ -1,4 +1,4 @@
-package com.agusstkd.fasekotlin
+package com.agusstkd.fasekotlin.model
 
 enum class Colors {
     SELECCIONE_UN_DATO,

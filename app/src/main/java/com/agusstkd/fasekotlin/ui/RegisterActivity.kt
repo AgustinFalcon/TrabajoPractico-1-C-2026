@@ -1,4 +1,4 @@
-package com.agusstkd.fasekotlin
+package com.agusstkd.fasekotlin.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,10 +7,10 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.agusstkd.fasekotlin.model.Colors
+import com.agusstkd.fasekotlin.model.Persona
+import com.agusstkd.fasekotlin.R
 import com.agusstkd.fasekotlin.databinding.RegisterMainBinding
 import com.google.gson.Gson
 

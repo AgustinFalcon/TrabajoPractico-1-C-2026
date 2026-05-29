@@ -1,9 +1,9 @@
-package com.agusstkd.fasekotlin
+package com.agusstkd.fasekotlin.model
 
 import java.io.Serializable
 
 data class Persona(
     val name: String,
     val pass: String,
-    val color: Colors
+    val color: Colors,
 ): Serializable
