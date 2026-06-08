@@ -1,6 +1,7 @@
 package com.agusstkd.fasekotlin.ui.home.list
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,16 +13,14 @@ import com.agusstkd.fasekotlin.model.User
 
 class ListAdapter(val onUserClick: OnUserClick) : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
-    private var userList = listOf<User>(
-        User(1, "Pepe", "Mujica"),
-        User(2, "Mary", "Jane"),
-        User(3, "Leo", "Messi"),
-        User(4, "Dibu", "Martinez"),
-        User(5, "Pepe", "Mujica"),
-        User(6, "Mary", "Jane"),
-        User(7, "Leo", "Messi"),
-        User(8, "Dibu", "Martinez"),
-    )
+    private var userList = emptyList<User>()
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(userList: List<User>) {
+        this.userList = userList
+        notifyDataSetChanged()
+    }
 
     inner class ListViewHolder(val binding: ItemRecyclerviewListUserBinding): RecyclerView.ViewHolder(binding.root) {
 

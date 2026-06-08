@@ -1,14 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.agusstkd.fasekotlin"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.agusstkd.fasekotlin"
@@ -56,4 +53,16 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.9.8")*/
 
     implementation("com.google.code.gson:gson:2.11.0")
+
+    // Room
+    //implementation(libs.androidx.room.runtime)
+    //implementation(libs.androidx.room.ktx)
+    //ksp(libs.androidx.room.compiler)
+
+    implementation("androidx.room:room-runtime:2.8.4")
+    implementation("androidx.room:room-ktx:2.8.4")
+    ksp("androidx.room:room-compiler:2.8.4")
+
+    implementation("androidx.fragment:fragment-ktx:1.8.9")
+    implementation("androidx.activity:activity-ktx:1.11.0")
 }

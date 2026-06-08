@@ -6,12 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.agusstkd.fasekotlin.R
 import com.agusstkd.fasekotlin.databinding.FragmentListBinding
 import com.agusstkd.fasekotlin.model.User
+import com.agusstkd.fasekotlin.ui.home.UserViewModel
+import kotlin.random.Random
 
 class ListFragment : Fragment(), OnUserClick {
+
+    private val viewModel: UserViewModel by viewModels()
 
     private lateinit var binding: FragmentListBinding
 
@@ -35,9 +42,25 @@ class ListFragment : Fragment(), OnUserClick {
         // Linea divisoria
         val divider = DividerItemDecoration(requireContext(), layout.orientation)
         binding.userRecyclerView.addItemDecoration(divider)
+
+
+        viewModel.readAllData.observe(viewLifecycleOwner) { personList ->
+            adapter.setList(personList)
+        }
+
+        binding.btnAdd.setOnClickListener {
+            findNavController().navigate(R.id.action_listFragment_to_addFragment)
+        }
+
+        binding.btnDelete.setOnClickListener {
+            viewModel.deleteAllUsers()
+        }
     }
 
     override fun onClick(user: User) {
+        val bundle = Bundle()
+        bundle.putSerializable("user", user)
+        findNavController().navigate(R.id.action_listFragment_to_updateFragment, bundle)
         Toast.makeText(requireContext(), "Bienvenido/a: ${user.name} + ${user.id}", Toast.LENGTH_SHORT).show()
     }
 }
