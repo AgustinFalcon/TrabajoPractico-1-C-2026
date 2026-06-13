@@ -1,5 +1,6 @@
 package com.agusstkd.fasekotlin.ui.home.update
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -54,9 +55,30 @@ class UpdateFragment : Fragment() {
 
 
         binding.btndeleteUser.setOnClickListener {
-            viewModel.deleteUser(user)
+            showPopup(user)
+        }
+    }
+
+    private fun showPopup(user: User) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("¡OJO!")
+        builder.setMessage("Quiere eliminar el usuario: ${user.name}?")
+
+        builder.setPositiveButton("Aceptar") { dialog, _ ->
+            deleteUser(user)
+            dialog.dismiss()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
+
+        builder.setNegativeButton("Cancelar") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
+    private fun deleteUser(user: User) {
+        viewModel.deleteUser(user)
     }
 
 }

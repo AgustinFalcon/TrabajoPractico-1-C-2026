@@ -13,18 +13,18 @@ import com.agusstkd.fasekotlin.model.User
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(user: User)
+    suspend fun insert(user: User)
 
     @Query("SELECT * FROM users ORDER BY id ASC")
     fun readAllData(): LiveData<List<User>>
 
     @Update
-    fun update(user: User)
+    suspend fun update(user: User)
 
     @Delete
-    fun deleteUser(user: User)
+    suspend fun deleteUser(user: User)
 
     @Query("DELETE FROM users")
-    fun deleteAll()
+    suspend fun deleteAll()
 
 }

@@ -15,15 +15,31 @@ class ListAdapter(val onUserClick: OnUserClick) : RecyclerView.Adapter<ListAdapt
 
     private var userList = emptyList<User>()
 
-
     @SuppressLint("NotifyDataSetChanged")
     fun setList(userList: List<User>) {
         this.userList = userList
         notifyDataSetChanged()
     }
 
-    inner class ListViewHolder(val binding: ItemRecyclerviewListUserBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ListViewHolder(private val binding: ItemRecyclerviewListUserBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(user: User) {
+            with(binding) {
+                tvName.text = user.name
+                tvId.text = user.id.toString()
+                tvDescription.text = user.description
 
+                root.setOnClickListener {
+                    onUserClick.onClick(user = user)
+                }
+            }
+            /*binding.tvName.text = user.name
+            binding.tvId.text = user.id.toString()
+            binding.tvDescription.text = user.description
+
+            binding.root.setOnClickListener {
+                onUserClick.onClick(user = user)
+            }*/
+        }
     }
 
     override fun onCreateViewHolder(viewGruop: ViewGroup, viewType: Int): ListViewHolder {
@@ -34,16 +50,8 @@ class ListAdapter(val onUserClick: OnUserClick) : RecyclerView.Adapter<ListAdapt
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) { //0
         val user = userList.get(position)
-        holder.binding.tvName.text = user.name
-        holder.binding.tvId.text = user.id.toString()
-        holder.binding.tvDescription.text = user.description
-
-        holder.binding.root.setOnClickListener {
-            onUserClick.onClick(user = user)
-        }
+        holder.bind(user = user)
     }
 
-    override fun getItemCount(): Int {
-        return userList.size
-    }
+    override fun getItemCount(): Int = userList.size
 }

@@ -1,5 +1,6 @@
 package com.agusstkd.fasekotlin.ui.home.list
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +54,7 @@ class ListFragment : Fragment(), OnUserClick {
         }
 
         binding.btnDelete.setOnClickListener {
-            viewModel.deleteAllUsers()
+            showPopup()
         }
     }
 
@@ -62,5 +63,28 @@ class ListFragment : Fragment(), OnUserClick {
         bundle.putSerializable("user", user)
         findNavController().navigate(R.id.action_listFragment_to_updateFragment, bundle)
         Toast.makeText(requireContext(), "Bienvenido/a: ${user.name} + ${user.id}", Toast.LENGTH_SHORT).show()
+    }
+
+
+    private fun showPopup() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("¡ALERTA!")
+        builder.setMessage("Esta seguro que quiere eliminar toda la base de datos?")
+
+        builder.setPositiveButton("Aceptar") { dialog, _ ->
+            deleteAllUsers()
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Cancelar") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
+
+    private fun deleteAllUsers() {
+        viewModel.deleteAllUsers()
     }
 }

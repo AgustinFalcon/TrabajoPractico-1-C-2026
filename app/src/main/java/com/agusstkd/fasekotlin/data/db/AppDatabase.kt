@@ -1,10 +1,12 @@
 package com.agusstkd.fasekotlin.data.db
 
+import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.agusstkd.fasekotlin.DesaMobileApp
 import com.agusstkd.fasekotlin.data.db.dao.UserDao
+import com.agusstkd.fasekotlin.model.Persona
 import com.agusstkd.fasekotlin.model.User
 
 

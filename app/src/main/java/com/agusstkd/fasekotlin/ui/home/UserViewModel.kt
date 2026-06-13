@@ -2,7 +2,11 @@ package com.agusstkd.fasekotlin.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.agusstkd.fasekotlin.model.User
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class UserViewModel : ViewModel() {
 
@@ -10,19 +14,30 @@ class UserViewModel : ViewModel() {
     val readAllData: LiveData<List<User>> = repository.readAllData
 
     fun insert(user: User) {
-        repository.insertUser(user)
+        /*CoroutineScope(Dispatchers.IO).launch {
+            repository.insertUser(user)
+        }*/
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertUser(user)
+        }
     }
 
     fun updateUser(user: User) {
-        repository.updateUser(user)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateUser(user)
+        }
     }
 
     fun deleteUser(user: User) {
-        repository.deleteUser(user)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteUser(user)
+        }
     }
 
     fun deleteAllUsers() {
-        repository.deleteAllUsers()
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllUsers()
+        }
     }
 
 }
